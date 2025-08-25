@@ -17,9 +17,4 @@ public class ProductController {
                 Map.of("id", "p3", "name", "비비아 조명", "price", 890000)
         );
     }
-
-    @GetMapping("/actuator/healthz")
-    public Map<String, Object> healthz() {
-        return Map.of("ok", true);
-    }
 }
