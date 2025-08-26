@@ -19,12 +19,15 @@ public class ProductController {
 
     @GetMapping("/api/products")
     public Page<ProductResponseDto> list(
-            @RequestParam(required = false) String category,
-            @RequestParam(required = false) String keyword,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "12") int size) {
+        @RequestParam(required = false) String category,
+        @RequestParam(required = false) String keyword,
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "12") int size) {
 
-        return productRepository.search(category, keyword, PageRequest.of(page, size))
-                .map(ProductResponseDto::new);
+        String sanitizedKeyword = (keyword == null || keyword.isBlank()) ? null : keyword.replaceAll("\\s+", "");
+
+        return productRepository.search(category, sanitizedKeyword, PageRequest.of(page, size))
+            .map(ProductResponseDto::new);
     }
+
 }

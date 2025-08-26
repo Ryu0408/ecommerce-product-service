@@ -12,8 +12,9 @@ public interface ProductRepository extends JpaRepository<Product, byte[]> {
     @Query("SELECT p FROM Product p " +
             "JOIN p.category c " +
             "WHERE (:category IS NULL OR c.name = :category) " +
-            "AND (:keyword IS NULL OR p.name LIKE %:keyword%)")
+            "AND (:keyword IS NULL OR LOWER(REPLACE(p.name, ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:keyword, ' ', ''), '%')))")
     Page<Product> search(@Param("category") String category,
                          @Param("keyword") String keyword,
                          Pageable pageable);
+
 }
