@@ -9,3 +9,6 @@ out/
 .vscode/
 *.iml
 .DS_Store
+
+# App config
+src/main/resources/application.yml
