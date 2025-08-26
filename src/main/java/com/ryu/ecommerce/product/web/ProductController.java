@@ -1,6 +1,6 @@
 package com.ryu.ecommerce.product.web;
 
-import com.ryu.ecommerce.product.domain.Product;
+import com.ryu.ecommerce.product.dto.ProductResponseDto;
 import com.ryu.ecommerce.product.repository.ProductRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +17,9 @@ public class ProductController {
     }
 
     @GetMapping("/api/products")
-    public List<Product> list() {
-        return productRepository.findAll();
+    public List<ProductResponseDto> list() {
+        return productRepository.findAll().stream()
+                .map(ProductResponseDto::new)
+                .toList();
     }
 }

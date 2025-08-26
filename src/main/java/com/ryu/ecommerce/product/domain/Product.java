@@ -1,22 +1,23 @@
 package com.ryu.ecommerce.product.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "products")
 public class Product {
 
     @Id
-    private byte[] id; // BINARY(16) → UUID를 byte[]로 매핑
+    private byte[] id;
 
     private String name;
     private String description;
     private double price;
     private int stockQuantity;
 
-    // getter/setter
+    @ManyToOne(fetch = FetchType.LAZY)   // 다:1 관계
+    @JoinColumn(name = "category_id")    // FK 컬럼
+    private Category category;
+
     public byte[] getId() { return id; }
     public void setId(byte[] id) { this.id = id; }
 
@@ -31,4 +32,7 @@ public class Product {
 
     public int getStockQuantity() { return stockQuantity; }
     public void setStockQuantity(int stockQuantity) { this.stockQuantity = stockQuantity; }
+
+    public Category getCategory() { return category; }
+    public void setCategory(Category category) { this.category = category; }
 }
